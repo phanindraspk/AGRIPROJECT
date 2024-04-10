@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /*Vh defines viewport*/
+            margin: 0;
+        }
+
+        .signup-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 30vh;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+    </style>
+</head>
+
+<body>
+    <form class="signup-form" onsubmit="return validateForm()"> <!--onsubmit="return validateForm()" why this ?-->
+        <h2>Signup</h2>
+        <input type="text" id="name" placeholder="Full Name"><br>
+        <span class="error-message" id="name-error"></span><br>
+        <input type="text" id="mobileNumber" placeholder="Mobile Number"><br>
+        <span class="error-message" id="mobileNumber-error"></span><br>
+        <input type="email" id="email" placeholder="Email Address"><br>
+        <span class="error-message" id="email-error"></span><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <span class="error-message" id="password-error"></span><br>
+        <input type="password" id="verifypassword" placeholder="Re enter Password"><br>
+        <span class="error-message" id="verifypassword-error"></span><br><br>
+
+
+        
+        <button onsubmit="validateForm()">Sign Up</button>
+    </form>
+        
+    </div>
+    <script>
+
+        function validateEmail(email) {
+            var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(String(email).toLowerCase());
+        }
+        function validateNepaliPhoneNumber(phoneNumber) {
+            var regex = /^9[78]\d{8}$/;
+            return regex.test(phoneNumber);
+        }
+        function validateForm() {
+            var name = document.getElementById('name').value;
+            var mobileNumber = document.getElementById('mobileNumber').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var password = document.getElementById('verifypassword').value;
+            var isValid = true; //isValid is used as a flag in the JavaScript form validation function to keep track of whether the form data is valid or not. Initially, it is set to true, assuming that the form is valid. As the validation checks are performed, if any check fails (for example, if an input is empty or doesn’t match the required pattern), isValid is set to false. 
+
+            //Error Message
+            document.getElementById('name-error').textContent='';
+            document.getElementById('mobileNumber-error').textContent='';
+            document.getElementById('password-error').textContent='';
+            document.getElementById('verifypassword-error').textContent = '';
+            if (name==''){
+                document.getElementById('name-error').textContent = 'Please enter your name.';
+                isValid=false;
+            }
+            if(mobileNumber=='' || !validateNepaliPhoneNumber(mobileNumber)){
+                document.getElementById('mobileNumber-error').textContent = '   Please enter a valid mobile number';
+                isValid = false;
+            }
+            if(email=='' || !validateEmail(email)){
+                document.getElementById('email-error').textContent ='Please enter a valid email address.';
+                isValid = false;
+            }
+
+            if (password== ''){
+                document.getElementById('password-error').textContent = 'please enter a password.';
+                isValid = false;
+            }
+
+            if (password == '') {
+                document.getElementById('verifypassword-error').textContent = 'please enter a password again.';
+                isValid = false;
+            }
+
+            if(isValid){
+                alert('Signup Successful');
+            }
+
+            return isValid; //return false to prevent form submission if validation fails
+        }
+
+        
+    </script>
+</body>
+
+</html>
