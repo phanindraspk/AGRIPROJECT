@@ -67,31 +67,62 @@
         <span class="error-message" id="email-error"></span><br>
         <input type="password" id="password" placeholder="Password"><br>
         <span class="error-message" id="password-error"></span><br>
+        <!-- <span class="error-message" id="uppercase-error"></span>
+        <span class="error-message" id="lowercase-error"></span>
+        <span class="error-message" id="digits-error"></span>
+        <span class="error-message" id="char-error"></span>
+        <span class="error-message" id="eightChar-error"></span> -->
         <input type="password" id="verifypassword" placeholder="Re enter Password"><br>
         <span class="error-message" id="verifypassword-error"></span><br><br>
 
 
-        
-        <button onsubmit="validateForm()">Sign Up</button>
+        <button type="submit">Sign Up</button>
+
+        <!-- <form onsubmit="validateForm()">Sign Up</form> -->
     </form>
         
-    </div>
     <script>
 
         function validateEmail(email) {
             var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return regex.test(String(email).toLowerCase());
         }
+
         function validateNepaliPhoneNumber(phoneNumber) {
             var regex = /^9[78]\d{8}$/;
             return regex.test(phoneNumber);
         }
+
+        function validatePassword(password){
+            var regex = /^(?=.*[A - Z])(?=.*[a - z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return regex.test(password);
+
+        }
+        // function containsUppercase(password) {
+        //     return /[A-Z]/.test(password);
+        // }
+        // function containsLowercase(password) {
+        //     return /[a-z]/.test(password);
+        // }
+        // function containsDigits(password) {
+        //     return /\d/.test(password);
+        // }
+        // function containsChar(password) {
+        //     return /[@$! %*?&]/.test(password);
+        // }
+        // function containsEightChar(password) {
+        //     return password.length >= 8;
+        // }    
+
+        
+
         function validateForm() {
             var name = document.getElementById('name').value;
             var mobileNumber = document.getElementById('mobileNumber').value;
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
-            var password = document.getElementById('verifypassword').value;
+            var verifypassword = document.getElementById('verifypassword').value;
+            // var upperCasePassword = document.getElementById('password').value;
             var isValid = true; //isValid is used as a flag in the JavaScript form validation function to keep track of whether the form data is valid or not. Initially, it is set to true, assuming that the form is valid. As the validation checks are performed, if any check fails (for example, if an input is empty or doesn’t match the required pattern), isValid is set to false. 
 
             //Error Message
@@ -99,12 +130,17 @@
             document.getElementById('mobileNumber-error').textContent='';
             document.getElementById('password-error').textContent='';
             document.getElementById('verifypassword-error').textContent = '';
+            // document.getElementById('uppercase-error').textContent = '';
+            // document.getElementById('lowercase-error').textContent = '';
+            // document.getElementById('digits-error').textContent = '';
+            // document.getElementById('char-error').textContent = '';
+            // document.getElementById('eightChar-error').textContent = '';
             if (name==''){
                 document.getElementById('name-error').textContent = 'Please enter your name.';
                 isValid=false;
             }
             if(mobileNumber=='' || !validateNepaliPhoneNumber(mobileNumber)){
-                document.getElementById('mobileNumber-error').textContent = '   Please enter a valid mobile number';
+                document.getElementById('mobileNumber-error').textContent = 'Please enter a valid mobile number';
                 isValid = false;
             }
             if(email=='' || !validateEmail(email)){
@@ -112,13 +148,43 @@
                 isValid = false;
             }
 
-            if (password== ''){
+            if (password ==='' ){
                 document.getElementById('password-error').textContent = 'please enter a password.';
                 isValid = false;
             }
 
-            if (password == '') {
-                document.getElementById('verifypassword-error').textContent = 'please enter a password again.';
+            // if (!containsUppercase(password)) {
+            //     document.getElementById('uppercase-error').textContent = 'Password should contain at least 1 Uppercase.';
+            //     isValid = false;
+            // }
+            // if (!containsLowercase(password)) {
+            //     document.getElementById('lowercase-error').textContent = 'Password should contain at least 1 Lowercase.';
+            //     isValid = false;
+            // }
+            // if (!containsDigits(password)) {
+            //     document.getElementById('digits-error').textContent = 'Password should contain at lease 1 digit.';
+            //     isValid = false;
+            // }
+            // if (!containsChar(password)) {
+            //     document.getElementById('char-error').textContent = 'Password should contain at least 1 character.';
+            //     isValid = false;
+            // }
+            // if (!containsEightChar(password)) {
+            //     document.getElementById('eightChar-error').textContent = 'Password should contain at lease 8 chcracter.';
+            //     isValid = false;
+            // }
+            if(password!== '' && !validatePassword(password)) {
+                document.getElementById('password-error').textContent = 'Password Should Contain \n\nMinimum eight characters in length \n\nAt least one uppercase letter(A - Z) \n\nAt least one lowercase letter(a - z) \n\nAt least one digit(0 - 9) \n\nAt least one special character(e.g., # ? !@$ %^&* -)';
+                isValid = false;
+            }
+
+            if (verifypassword==''){
+                document.getElementById('verifypassword-error').textContent = 'Please enter a password again.';
+                isValid = false;
+            }
+
+            if (password !== verifypassword) {
+                document.getElementById('verifypassword-error').textContent = 'Passwords does not match.';
                 isValid = false;
             }
 
